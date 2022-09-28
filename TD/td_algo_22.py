@@ -1,1 +1,2 @@
-for x in range()
+for x in range():
+    pass
