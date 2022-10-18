@@ -109,7 +109,7 @@ reseau = {
 }
 
 def get_prenom(dico, key):
-    val = dico[key]
+    val = dico.get(key)
     return val
 print(get_prenom(dict_etudiants1, 204909))
 
@@ -118,3 +118,19 @@ def get_numero(dico, val):
         if v == val:
             return k
 print(get_numero(dict_etudiants1, 'PERRIN'))
+
+def get_nom_10(dico):
+    val = []
+    for k,v in dico.items():
+        if k%10 == 0:
+            val.append(v)
+    return val
+print(get_nom_10(dict_etudiants1))
+
+def first_letter_b(dico):
+    keys = []
+    for k,v in dico.items():
+        if v[0] == 'B':
+            keys.append(k)
+    return keys
+print(first_letter_b(dict_etudiants1))

@@ -19,5 +19,5 @@ def jean(li_corps):
             print((relou(['son doigt','sa main','ses cheveux']))[j-1])
         print("Ainsi danse Jean Petit.\n")
 
-
+print("")
 jean(['son doigt','sa main','ses cheveux'])
