@@ -32,8 +32,9 @@ def traduire_text_morse(dico,chaine):
     finito =''
     for i in range(len(chaine)):
         finito += str(dico.get(chaine[i]))
+        finito += " "
     return finito
-print(traduire_text_morse(dict_morse,"LE CHAT EST NOIR"))
+print(traduire_text_morse(dict_morse,"PEDRO"))
 
 def reverse_dict(dico):
     reverse_dico = dict()
