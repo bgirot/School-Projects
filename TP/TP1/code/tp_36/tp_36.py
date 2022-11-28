@@ -1,6 +1,2 @@
 import maxtab
-import doctest
-
-doctest.testmod(verbose=True)
-
-print(maxtab.maxtab([20,11,9]))
+print(maxtab.maxtab([8,6,7,10,2]))
