@@ -6,6 +6,6 @@ def calcule_moyenne(f):
     return d
 
 def exporte_moyenne(dico,fichier_cible):
-    for key,value in dico:
-        fichier_cible.write(key,";",value[0],";",value[1],";",value[2],";",value[3])
+    for key,value in dico.items():
+        fichier_cible.write(str(key),";",str(value[0]),";",str(value[1]),";",str(value[2]),";",str(value[3]))
 exporte_moyenne(calcule_moyenne(open("notes_etudiants.csv",'r')),open("fichier_cible.csv","w"))
