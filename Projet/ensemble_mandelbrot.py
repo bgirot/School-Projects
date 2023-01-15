@@ -29,10 +29,10 @@ def prochains_termes(x,y,a,b) :
         :param y: premier terme de la suite 2
         :param a: paramètre 1
         :param b: paramètre 2
-        :type x: int
-        :type y: int
-        :type a: int
-        :type b: int
+        :type x: float
+        :type y: float
+        :type a: float
+        :type b: float
         :return: les termes suivants des deux suites
         :rtype: tuple
 
@@ -55,10 +55,10 @@ def indice_divergence(x,y,a,b,n) :
         :param a: paramètre 1
         :param b: paramètre 2
         :param n: rang initial de la suite (0)
-        :type x: int
-        :type y: int
-        :type a: int
-        :type b: int
+        :type x: float
+        :type y: float
+        :type a: float
+        :type b: float
         :return: l'indicde de divergeance de l'ensemble de Mandelbrot
         :rtype: n
 
@@ -86,8 +86,8 @@ def get_color(a,b) :
 
         :param a: paramètre 1
         :param b: paramètre 2
-        :type a: int
-        :type b: int
+        :type a: float
+        :type b: float
         :return: la couleur en système RGB à afficher pour cet ensemble
         :rtype: tuple
 
