@@ -4,18 +4,20 @@
 # Vérification du nombre d'arguments
 if [ $# -ne 2 ]; then
     echo "Nombre d'arguments incorrect : $# donné(s), 2 attendus"
-    echo "Syntaxe : bash admin_etudiants.sh <liste> <dossier>"
+    echo "Syntaxe attendue : bash admin_etudiants.sh <liste> <dossier>"
     exit 1
 fi
 
 # Vérification de l'existence des fichiers
 if [ ! -f $1 ]; then
     echo "Le fichier entré en paramètre n'existe pas"
+    echo "Syntaxe attendue : bash admin_etudiants.sh <liste> <dossier>"
     exit 1
 fi
 
 if [ ! -d $2 ]; then
     echo "Le dossier entré en paramètre n'existe pas"
+    echo "Syntaxe attendue : bash admin_etudiants.sh <liste> <dossier>"
     exit 1
 fi
 
@@ -24,15 +26,14 @@ FILE=$1
 DIR=$2
 
 # Fonctions --------------------------------------------------------------------
-
 # Génération mot de passe
 function password(){
     MDP=""
 
     # On génère une liste random de consonnes, de voyelles et de chiffres
-    RANDOM_CONS=$(head -n 10 /dev/random | tr -d -c 'bcdfghjklmnpqrstvwxz')
-    RANDOM_VOY=$(head -n 10 /dev/random | tr -d -c 'aeiouy')
-    RANDOM_NBR=$(head -n 10 /dev/random | tr -d -c '0123456789')
+    RANDOM_CONS=$(head -n 10 /dev/urandom | tr -d -c 'bcdfghjklmnpqrstvwxz')
+    RANDOM_VOY=$(head -n 10 /dev/urandom | tr -d -c 'aeiouy')
+    RANDOM_NBR=$(head -n 10 /dev/urandom | tr -d -c '0123456789')
 
     # On prend les 2 premiers caractères de chaque liste de cons et de voy random et on les alterne pour avoir le bon pattern (c v c v)
     for i in {1..2}; do
@@ -47,7 +48,7 @@ function password(){
     echo $MDP
 }
 
-# Génère un dossier personnel (param1:pseudo)
+# Génèration du dossier personnel (param1:pseudo)
 function create_dir(){
     mkdir $1                # Création du dossier principal
     mkdir $1/Documents      # Création du dossier documents
@@ -56,7 +57,7 @@ function create_dir(){
     echo "mot de passe : $(password)" > $1/mot_de_passe.txt     # Création du .txt contenant le mdp
 }
 
-# Récupère le pseudo de l'étudiant (param1:liste)
+# Récupère le pseudo de l'étudiant (param1:ligne de la liste)
 function get_pseudo(){
     # On récupère les noms et prénoms dans une ligne de la liste
     NOM=$(echo $1 | cut -d ";" -f 1)
@@ -75,11 +76,10 @@ function get_pseudo(){
 # Main -------------------------------------------------------------------------
 function main(){
     cat $FILE | while read LINE; do
-        cd $DIR
-        create_dir $(get_pseudo "$LINE")
-        cd ..
+        create_dir "$DIR/$(get_pseudo "$LINE")"    # Création du dossier perso grâce à la fonction create_dir qui prend en paramètre le pseudo de get_pseudo
     done
-    echo "finito"
+    echo "Opération terminée"
 }
 
+# Execution --------------------------------------------------------------------
 main
