@@ -1,4 +1,5 @@
 # Projet 2 : Génération de comptes étudiants
+#!/bin/bash
 
 # Vérification et récupération des arguments -----------------------------------
 # Vérification du nombre d'arguments
@@ -27,7 +28,7 @@ DIR=$2
 
 # Fonctions --------------------------------------------------------------------
 # Génération mot de passe
-function password(){
+function generatePassword(){
     MDP=""
 
     # On génère une liste random de consonnes, de voyelles et de chiffres
@@ -49,16 +50,16 @@ function password(){
 }
 
 # Génèration du dossier personnel (param1:pseudo)
-function create_dir(){
+function createDir(){
     mkdir $1                # Création du dossier principal
     mkdir $1/Documents      # Création du dossier documents
     mkdir $1/Images         # Création du dossier images
     
-    echo "mot de passe : $(password)" > $1/mot_de_passe.txt     # Création du .txt contenant le mdp
+    echo "mot de passe : $(generatePassword)" > $1/mot_de_passe.txt     # Création du .txt contenant le mdp
 }
 
 # Récupère le pseudo de l'étudiant (param1:ligne de la liste)
-function get_pseudo(){
+function getPseudo(){
     # On récupère les noms et prénoms dans une ligne de la liste
     NOM=$(echo $1 | cut -d ";" -f 1)
     PRENOM=$(echo $1 | cut -d ";" -f 2)
@@ -76,7 +77,7 @@ function get_pseudo(){
 # Main -------------------------------------------------------------------------
 function main(){
     cat $FILE | while read LINE; do
-        create_dir "$DIR/$(get_pseudo "$LINE")"    # Création du dossier perso grâce à la fonction create_dir qui prend en paramètre le pseudo de get_pseudo
+        createDir "$DIR/$(getPseudo "$LINE")"    # Création du dossier perso grâce à la fonction createDir qui prend en paramètre le pseudo de getPseudo
     done
     echo "Opération terminée"
 }
