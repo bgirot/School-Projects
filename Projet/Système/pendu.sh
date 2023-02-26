@@ -38,11 +38,10 @@ function display(){
     echo -e "******************************\n"                          # Affichage du divider
     echo -e "${PENALITY[$FAILED_ATTEMPS]}\n"                            # Affichage du dessin de pénalité courant
     echo -e "Lettres testées : $TESTED_LETTERS\n"                       # Affichage des lettres testées
-    echo $WORD_TO_FIND
-    echo -e "$WORD_TO_FIND" | tr "$NOT_TESTED_LETTERS" "_"           # Affichage du mot à trouver
+    echo -e "$WORD_TO_FIND" | tr "$NOT_TESTED_LETTERS" "_"              # Affichage du mot à trouver
 }
 
-function testLetter(){
+function testCurrentLetter(){
     # Gestion des erreurs (une seule lettre et une lettre pas un chiffre)
     if [ ${#LETTER} -ne 1 ] || ! [[ "$LETTER" =~ [A-Z] ]]; then
         echo "Erreur : vous devez entrer une seule lettre qui soit en majuscule"
@@ -52,7 +51,6 @@ function testLetter(){
     # Si la lettre a déjà été testée
     if [[ "$TESTED_LETTERS" =~ "$LETTER" ]]; then
         echo "La lettre $LETTER a déjà été testée"
-        FAILED_ATTEMPS=$[$FAILED_ATTEMPS+1]
 
     # Si la lettre n'est pas dans le mot
     elif ! [[ "$WORD_TO_FIND" =~ "$LETTER" ]]; then
@@ -64,9 +62,10 @@ function testLetter(){
     elif [[ "$WORD_TO_FIND" =~ "$LETTER" ]]; then
         TESTED_LETTERS+="$LETTER "
         NOT_TESTED_LETTERS=$(echo $NOT_TESTED_LETTERS | sed "s/$LETTER//")
+
         # Si le joueur gagne sur ce coup
-        if [ $(echo $WORD_TO_FIND | tr "$NOT_TESTED_LETTERS" "_" | grep -o "_" | wc -l) -eq 0 ]; then
-            echo -e "\nVous avez gagné !"
+        if [ $(echo $WORD_TO_FIND | tr "$NOT_TESTED_LETTERS" "_") == $WORD_TO_FIND ]; then
+            echo -e "\nVous avez gagné ! Le mot était bien $WORD_TO_FIND !"
             exit 0
         else
             echo "La lettre $LETTER est dans le mot recherché"
@@ -81,15 +80,15 @@ function main(){
     TESTED_LETTERS=""
     NOT_TESTED_LETTERS="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-    display 
+    display
 
     while [ $FAILED_ATTEMPS -lt 10 ]; do
         read -p "Choisissez une lettre : " LETTER
-        testLetter
+        testCurrentLetter
         display
     done
 
-    echo -e "\nVous avez perdu !"
+    echo -e "\nVous avez perdu ! Le mot était $WORD_TO_FIND !"
 }
 
 main        # Exécution
