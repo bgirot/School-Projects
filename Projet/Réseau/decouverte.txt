@@ -1,0 +1,58 @@
+Découverte des outils réseaux :
+
+Ex 8:
+8.1 www.google.com has addres 142.250.75.228
+
+8.2 fr.wikipedia.org has address 185.15.58.224
+    linuxfr.org has address 213.36.253.175
+
+    Utilisation de la commande ping <adresse IP> :
+
+    wikipedia :
+    --- 185.15.58.224 ping statistics ---
+    26 packets transmitted, 19 received, 26.9231% packet loss, time 25365ms
+    rtt min/avg/max/mdev = 62.481/115.924/305.781/51.808 ms
+
+    linuxfr :
+    --- 213.36.253.175 ping statistics ---
+    12 packets transmitted, 12 received, 0% packet loss, time 11019ms
+    rtt min/avg/max/mdev = 31.261/56.501/99.961/19.364 ms
+
+Ex 9:
+9.1 Utilisation de la commande ping <adresse IP> :
+
+    linuxfr :
+    --- linuxfr.org ping statistics ---
+    4 packets transmitted, 4 received, 0% packet loss, time 3005ms
+    rtt min/avg/max/mdev = 23.224/69.974/112.902/33.204 ms
+
+    www.univ-rennes1.fr :
+    --- nfrontaldrupal8.univ-rennes1.fr ping statistics ---
+    7 packets transmitted, 7 received, 0% packet loss, time 6011ms
+    rtt min/avg/max/mdev = 24.059/54.223/88.188/24.333 ms
+
+    www.traveljuneau.com :
+    --- fp2c67.wpc.omicroncdn.net ping statistics ---
+    5 packets transmitted, 4 received, 20% packet loss, time 4549ms
+    rtt min/avg/max/mdev = 34.466/59.710/87.315/21.609 ms
+
+Ex 10:
+10.1 Utilisation de la commande traceroute <adresse IP> :
+
+    linuxfr :
+    traceroute to linuxfr.org (213.36.253.176), 30 hops max, 60 byte packets
+ 1  LAPTOP-KIH6L4K6.mshome.net (172.18.240.1)  0.500 ms  0.441 ms  0.425 ms
+ 2  gw-eduroam-3.univ-rennes1.fr (10.41.23.254)  44.997 ms  44.980 ms  44.909 ms
+ 3  ri-ext-int-1.univ-rennes1.fr (129.20.252.251)  44.908 ms  44.577 ms  44.552 ms
+ 4  te0-0-0-2-ren-nr-rennes-rtr-091.noc.renater.fr (193.51.184.26)  44.434 ms  44.365 ms  44.347 ms
+ 5  te0-1-0-13-ren-nr-caen-rtr-091.noc.renater.fr (193.55.205.16)  44.422 ms te0-1-0-11-ren-nr-caen-rtr-091.noc.renater.fr (193.55.205.12)  44.418 ms te0-0-0-12-ren-nr-caen-rtr-091.noc.renater.fr (193.55.205.4)  44.157 ms
+ 6  te0-1-0-11-ren-nr-rouen-rtr-091.noc.renater.fr (193.55.204.251)  44.219 ms te0-0-0-13-ren-nr-rouen-rtr-091.noc.renater.fr (193.55.204.247)  47.077 ms te0-1-0-12-ren-nr-rouen-rtr-091.noc.renater.fr (193.55.204.253)  46.995 ms
+ 7  xe-1-1-14-ren-nr-paris1-rtr-131.noc.renater.fr (193.55.204.239)  41.728 ms  64.506 ms xe-0-0-14-ren-nr-paris1-rtr-131.noc.renater.fr (193.55.204.225)  64.648 ms
+ 8  et-3-1-2-ren-nr-paris2-rtr-131.noc.renater.fr (193.55.204.195)  64.645 ms et-2-0-0-ren-nr-paris2-rtr-131.noc.renater.fr (193.55.204.193)  64.472 ms  64.461 ms
+ 9  193.51.187.209 (193.51.187.209)  64.613 ms  64.602 ms  64.489 ms
+10  * * *
+11  * * *
+12  c4948-bzn-fdt.routers.proxad.net (212.27.40.58)  38.202 ms  38.166 ms  34.266 ms
+13  prod.linuxfr.org (213.36.253.176)  34.209 ms  53.939 ms  34.182 ms
+
+Ex 11:
