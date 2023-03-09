@@ -1,25 +1,59 @@
 import matplotlib.pyplot as plt
 import matplotlib.image as img
-import doctest
 
 def neg(im) :
-    for el in im:
-        print(el)
+    neg_matrix = [[1 for x in range(len(im[0]))] for y in range(len(im))]
+    for i in range(len(im)):
+        for j in range(len(im[0])):
+            neg_matrix[i][j] -= im[i][j]
+    return neg_matrix
 
 def miroir(im) :
-    return []
+    mirror_matrix = [[0 for x in range(len(im[0]))] for y in range(len(im))]
+    for i in range(len(im)):
+        for j in range(len(im[0])):
+            mirror_matrix[i][len(im[0]) - j - 1] = im[i][j]
+    return mirror_matrix
 
 def plus_de_lumiere(im,d) :
-    return []
+    lum_matrix = [[0 for x in range(len(im[0]))] for y in range(len(im))]
+    for i in range(len(im)):
+        for j in range(len(im[0])):
+            current_pixel = im[i][j]
+            if current_pixel + d > 1:
+                lum_matrix[i][j] = 1
+            elif current_pixel + d < 0:
+                lum_matrix[i][j] = 0
+            else:
+                lum_matrix[i][j] = current_pixel + d
+    return lum_matrix
 
 def plus_de_contraste(im,k) :
-    return []
+    ctrst_matrix = [[0 for x in range(len(im[0]))] for y in range(len(im))]
+    for i in range(len(im)):
+        for j in range(len(im[0])):
+            current_pixel = im[i][j]
+            if current_pixel + k*(current_pixel-0.5) > 1:
+                ctrst_matrix[i][j] = 1
+            elif current_pixel + k*(current_pixel-0.5) < 0:
+                ctrst_matrix[i][j] = 0
+            else:
+                ctrst_matrix[i][j] = current_pixel + k*(current_pixel-0.5)
+    return ctrst_matrix
 
 def photomaton(im) :
-    return []
+    photo_matrix = [[0 for x in range(len(im[0])*2)] for y in range(len(im)*2)]
+    for i in range(len(photo_matrix)):
+        for j in range(len(photo_matrix[0])):
+            photo_matrix[i][j] = im[int(i%(len(photo_matrix)/2))][int(j%(len(photo_matrix[0])/2))]
+    return photo_matrix
 
 def mlgk(im, k) :
-    return []
+    if k == 0:
+        return photomaton(im)
+    else:
+        print(k)
+        return photomaton(mlgk(im, k-2))
 
 # Réduction du nombre de couleurs
 def f(x, b) :
@@ -59,6 +93,5 @@ def taille(qt) :
 if __name__ == "__main__" :
     june = img.imread('june.png')
     june = (june[:,:,0]+june[:,:,1]+june[:,:,2])/3
-    neg(june)
-    plt.imshow(june,plt.cm.gray)
+    plt.imshow(mlgk(june, 4),plt.cm.gray)
     plt.show()
