@@ -31,8 +31,6 @@ def photomaton(im) :
 
     return photomaton_matrix
 
-    return [[im[2*i][2*j] if i < n and j < n else im[2*i][2*(j-n)+1] if i < n and j >= n else im[2*(i-n)+1][2*j] if i >= n and j < n else im[2*(i-n)+1][2*(j-n)+1] for j in range(2*n)] for i in range(2*n)]
-
 def mlgk(im, k) :
     # Fonction récursive qui applique k fois la fonction photomaton à l'image
     return photomaton(im) if k == 1 else photomaton(mlgk(im, k-1))
@@ -63,14 +61,39 @@ def moins_de_pix2(im, k) :
             
     return matrix
 
+def mediane(sample):
+    sample.sort()
+    if len(sample)%2 == 0:
+        return (sample[len(sample)//2 - 1] + sample[len(sample)//2])/2
+    else:
+        return sample[len(sample)//2]
+
+def get_neighbours(im, i, j, q):
+    neighbours = []
+    for x in range(-q, q+1):
+        for y in range(-q, q+1):
+            if i+x >= 0 and i+x < len(im) and j+y >= 0 and j+y < len(im) and (x != 0 or y != 0):
+                neighbours.append(im[i+x][j+y])
+    return neighbours
+
 def filtre_median(im, q) :
-    return []
+    return [[mediane(get_neighbours(im, i, j, q)) for j in range(len(im))] for i in range(len(im))]
 
 def init(k) :
-    return []
+    return [[0 for y in range(2**k)] for x in range(2**k)]
 
 def arbre_to_image(qt,i,j,k,im) :
-    pass
+    if type(qt) == int:
+        for x in range(i, i+(2**k)):
+            for y in range(j, j+(2**k)):
+                im[x][y] = qt
+
+    else:
+        arbre_to_image(qt[0], i, j, k-1, im)
+        arbre_to_image(qt[1], i, j+(2**(k-1)), k-1, im)
+        arbre_to_image(qt[2], i+(2**(k-1)), j, k-1, im)
+        arbre_to_image(qt[3], i+(2**(k-1)), j+(2**(k-1)), k-1, im)
+        
 
 def new_coul(x,nbc) :
     return 0
@@ -86,12 +109,19 @@ def taille(qt) :
 
 if __name__ == "__main__" :
     june = img.imread('june.png')
+    june_bruit = img.imread('juneBruit.png')
     june = (june[:,:,0]+june[:,:,1]+june[:,:,2])/3
+    june_bruit = (june_bruit[:,:,0]+june_bruit[:,:,1]+june_bruit[:,:,2])/3
+
+    qt0 = [[2, 0, 0, 2], 1, [2, 1, 2, 1], 0]
+
 
     # plt.subplot(1,2,1)
-    plt.imshow(moins_de_pix(june,9),plt.cm.gray)
+    # plt.imshow(filtre_median(june_bruit, 4),plt.cm.gray)
 
     # plt.subplot(1,2,2)
-    # plt.imshow(moins_de_pix2(june,9),plt.cm.gray)
+    im0 = init(10)
+    arbre_to_image(qt0, 0, 0, 10, im0)
+    plt.imshow(im0,plt.cm.gray)
 
     plt.show()

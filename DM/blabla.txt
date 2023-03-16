@@ -1,0 +1,8 @@
+Fonction arbre to image :
+- Soit qt est une liste
+    |-> on poursuit dans l'arbre sans changer le rang
+
+- Soit qt est un entier
+    |-> on applique la valeur de qt au pixel courant
+        on passe à la subdivision suivante
+
