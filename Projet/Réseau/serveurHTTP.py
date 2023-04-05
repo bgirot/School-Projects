@@ -43,7 +43,37 @@ def get_reponse(url_page) :
     >>> b == "HTTP/1.0 404 NotFound\\r\\nContent-Type:text/html\\r\\nContent-Length:173\\r\\n\\r\\n<!DOCTYPE html>\\n<html>\\n<head><title>404 Not Found</title></head><body>\\n<h1>Page non trouvée !!</h1>\\n<p>L'URL demandée n'a pas été trouvée sur ce serveur.</p></body>\\n</html>\\r\\n"
     True
     """
-    return ""
+
+    try:
+
+        with open(url_page, 'r', encoding='utf-8') as f:
+
+            with open(url_page, 'r', encoding='utf-8') as f:
+
+                content = f.read()
+                content_length = len(content) + 1
+
+                content = "\n".join(content.split("\n"))
+
+                response = f"HTTP/1.0 200 OK\r\nContent-Type:text/html\r\nContent-Length:{content_length}\r\n\r\n"
+                response += content+"\r\n"
+
+                return response
+
+    except FileNotFoundError or PermissionError or IOError:
+
+        with open("pages_serveur/page404.html", 'r', encoding='utf-8') as f:
+
+            content = f.read()
+            content_length = len(content) + 1
+
+            content = "\n".join(content.split("\n"))
+
+            response = f"HTTP/1.0 404 NotFound\r\nContent-Type:text/html\r\nContent-Length:{content_length}\r\n\r\n"
+            response += content+"\r\n"
+
+            return response
+
 
 def traite_requete(requete) :
     """
@@ -52,7 +82,17 @@ def traite_requete(requete) :
     >>> traite_requete(ex_requete_http3) == get_reponse("pages_serveur/en/autres_pages/toto.html")
     True
     """
-    return ""
+    
+    page,options = decode_requete_http(requete)
+
+    if "Accept-Language" in options and options["Accept-Language"] == 'fr':
+        page = "pages_serveur/fr" + page
+
+    else:
+        page = "pages_serveur/en" + page
+
+    return get_reponse(page)
+        
 
 if __name__ == "__main__" :
     doctest.testmod()
