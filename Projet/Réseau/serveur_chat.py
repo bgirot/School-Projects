@@ -92,7 +92,7 @@ def traite_data(data, addr):
         send_message(addr, message)
     
     # Déconnexion
-    elif data.startswith(BALISE_QUIT):
+    elif data == BALISE_QUIT:
         send_quit_notification(addr)
 
     # Requête inconnue

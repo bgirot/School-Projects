@@ -45,7 +45,7 @@ def send():
         if message == "quit":
             s.sendto(BALISE_QUIT.encode(), (IP, PORT))
 
-            # On ferme le thread d'envoi (on ferma le socket plus tard dans receive)
+            # On ferme le thread d'envoi
             break
 
         # Sinon, on envoie le message de l'utilisateur
@@ -65,9 +65,7 @@ def receive():
 
         # Si le serveur nous déconnecte (du normalement à la demande de déconnexion effectuée par le thread d'envoie)
         if data.decode() == BALISE_QUIT:
-            # On ferme le socket puis le thread
-            s.close()
-            break
+            break   # Fermerture du thread de réception
 
         # Sinon on affiche les données (messages) reçus du serveur
         else:
