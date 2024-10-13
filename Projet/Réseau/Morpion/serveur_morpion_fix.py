@@ -60,7 +60,7 @@ def player_arrival(data, addr):
                 players[address] = (players[address], 2, 'O')
 
         # On crée le plateau de jeu
-        board = generate_board(2,2)
+        board = generate_board(15,15)
 
         # On envoie le message de début de partie aux joueurs
         for address in players.keys():

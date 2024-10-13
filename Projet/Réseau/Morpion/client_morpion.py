@@ -15,6 +15,19 @@ is_game_starting = True
 
 # Fonctions réseau
 def new_user_handler():
+    """Gère la connexion d'un nouveau joueur côté client
+
+    Demande le pseudo du joueur
+    Attend la validation du serveur
+    Accueille le joueur
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
+
     global is_game_starting
     while True:
         name = JOIN_TAG + input("Enter your name : ")
@@ -40,6 +53,17 @@ def new_user_handler():
             break
 
 def sender():
+    """Gère l'envoi de données au serveur
+
+    Fonctionne sur un thread attribué
+    Envoie les données entrées au clavier par l'utilisateur
+
+    Args:
+        None
+    
+    Returns:
+        None
+    """
     while True:
         message = input()
 
@@ -52,6 +76,14 @@ def sender():
 
 
 def receiver():
+    """Gère la réception de données
+    
+    Args:
+        None
+    
+    Returns:
+        None
+    """
     while True:
         data, addr = s.recvfrom(1024)
         data = data.decode()
